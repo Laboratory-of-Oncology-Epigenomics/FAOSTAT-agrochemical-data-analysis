@@ -1,4 +1,4 @@
-# FAOSTAT-agrotoxin-data
+# FAOSTAT-agrochemical-data-analysis
 This script analyzes data from [FAOSTAT](https://www.fao.org/faostat/en/#home). It is divided into three main sections: 
 
 1. **Configuration**;
