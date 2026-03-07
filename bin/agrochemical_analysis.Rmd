@@ -1,0 +1,124 @@
+---
+title: Brazil's agrotoxic use per year
+author: Samuel Prates dos Santos
+date: "`r Sys.Date()`"
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = "UTF-8",
+  output_dir = here::here ("results"),
+  output_file = paste0(Sys.Date(), ".html")) })
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    number_sections: true
+    theme: darkly
+    highlight: zenburn
+    df_print: paged
+    code_folding: show
+---
+# Introduction
+This script analyzes data from [FAOSTAT](https://www.fao.org/faostat/en/#home). It is divided into three main sections: 
+
+1. Configuration;
+2. Data Wrangling;
+3. Graph Creation. 
+
+The Configuration section allows you to change the analysis by setting various parameters. The Data Wrangling section cleans and prepares the data for visualization. And, lastly, the Graph Creation section creates a bar graph, helping visualize the top countries based on the specified criteria. This script is designed to be flexible and adaptable to any FAOSTAT data (hopefully), making it a useful tool for exploring and visualizing FAOSTAT datasets.
+
+If there's anything to improve (there probably is), please let me know by opening an issue or a PR on the repository :). Have a great day!
+
+# Libraries
+```{r library, message=FALSE, warning=FALSE}
+library(here)
+library(tidyverse)
+library(rmarkdown)
+```
+
+# Configuration
+
+> ✏️ **Edit only this chunk** to adapt the script to your analysis.
+
+```{r config, message=FALSE}
+file_path <- here("data", "FAOSTAT_data_en_3-5-2026.csv") 
+Target_Columns <- c("Year","Area", "Value") # Change what columns you want to analyze
+Target_Year <- 2020 # Select what year do you want analyze
+Minimum_Value <- 0 # Select the minimum value you want to analyze
+Target_Rank_Limit <- 10 # Select the number of countries to display in the ranking
+Allow_Legend <- FALSE # Set to TRUE to show the legend in the graph
+#============================== Graph Config =================================== 
+Allow_Gradient <- TRUE # Set to TRUE to allow gradient colors based on values
+Graph_Title <- "Annual agrochemicals consumption by country" # Graph's title
+Graph_Subtitle <- "" # Graph's subtitle
+Graph_x_Label <- "" # Graph's vertical label
+Graph_y_Label <- "Tons" # Graph's horizontal label
+#============================= Gradient colors =================================
+High_Gradient_Color <- "#cc0a00" # Color for the highest value
+Low_Gradient_Color <- "#fff3f2" # Color for the lowest value
+#========================== Non-Gradient colors ================================
+First_Place_Color <- "#FF0000" # Color for the first place
+Second_Place_Color <- "#00F0F0" # Color for the second place
+The_Leftover_color <- "#333333" # Color for the remaining ranks
+```
+# Data Wrangling
+
+```{r data_wrangling}
+Raw_Data <- read.csv(file_path) # Reads the raw_data from the specified file path
+Cleaned_Data <- Raw_Data |> # Cleans the data by converting columns to appropriate types, filtering by year and value, and selecting target columns
+  mutate(Year = as.integer(Year), # Converts the Year column to integer eg. 2020, 2021, etc.
+         Value = as.numeric(Value), # Converts the Value column to numeric e.g. 1000.0001, 20.40, etc.
+         Area = as.character(Area) # Converts the Area column to character e.g. "Brazil", "United States", etc.
+  ) |>
+  filter(Year == Target_Year & Value >= Minimum_Value) |># filters the data to include only the target year and  is greater then the minimum value.
+  select(all_of(Target_Columns)) # Selects only the target columns specified in the config block.
+Ranked_Data <- Cleaned_Data |> # Ranks the data by value, keeping only the top entries based on the target rank limit, and categorizes them into "First", "Second", and "Rest".
+  slice_max(Value, n = Target_Rank_Limit) |> # Keeps only the top entries based on the target rank limit.
+  arrange(desc(Value)) |> # arrange them into descending order based on the Value column.
+  mutate( 
+    Rank_Category = case_when( # Creates a new column called Rank_Category that categorizes the ranks into "First", "Second", and "Leftover" based on their position in the ranking.
+      row_number() == 1 ~ "First", # Ranks the first entry as "First"
+      row_number() == 2 ~ "Second", # Ranks the second entry as "Second"
+      TRUE ~ "Leftover" # Ranks the remaining entries as "Leftover"
+    ),
+    Area = reorder(Area, Value) # Reorders the Area column based on the Value column for better visualization in the graph.
+  )
+```
+# Graph Creation
+```{r graph_creation}
+# Creates a bar graph using ggplot2, with different fill colors based on the rank category. If Allow_Gradient is FALSE, it makes the non gradient color, otherwise, it makes a gradient based on the high and low colors choosen in the config block. The graph is faceted by year and includes titles and labels.
+Graph_colors <-c( # Creates the color based on the rank category column.
+  "First" = First_Place_Color,
+  "Second" = Second_Place_Color, 
+  "Leftover" = The_Leftover_color
+)
+# Simple if/else statement to decide whether to use a gradient fill or a categorical fill based on the Allow_Gradient variable.
+if (Allow_Gradient == FALSE) { 
+  ggplot(Ranked_Data, aes(x = Area, y = Value, fill = Rank_Category)) + # Makes a plot based on the Ranked_Data using the Area column as X, the Value column as y and the Rank_Category Column as the fill colors.
+    geom_col(show.legend = Allow_Legend) + # Decides if it will show the legend based on the Allow_Legend variable.
+    coord_flip(TRUE) + # coord_flip flips the coordinates, making the x turn vertical and the y horizontal 
+    scale_fill_manual(values = Graph_colors) +
+    facet_wrap(~ Year, scales = "free_y") +
+    labs(
+      title = Graph_Title,
+      x = Graph_x_Label,
+      y = Graph_y_Label
+    ) +
+    theme_minimal()
+} else {
+  ggplot(Ranked_Data, aes(x = Area, y = Value, fill = Value)) +
+    geom_col(show.legend = Allow_Legend) +
+    coord_flip() +
+    scale_fill_gradient(low = Low_Gradient_Color, high = High_Gradient_Color) +
+    facet_wrap(~ Year, scales = "free_y") +
+    labs(
+      title = Graph_Title,
+      subtitle = Graph_Subtitle,
+      x = Graph_x_Label,
+      y = Graph_y_Label
+    ) + theme_minimal()
+}
+```
+
+```{r save_message, echo=FALSE}
+message("The file was saved in 'Results'")
+```
