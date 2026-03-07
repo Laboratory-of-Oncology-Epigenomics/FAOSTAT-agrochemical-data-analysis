@@ -5,6 +5,9 @@ This script analyzes data from [FAOSTAT](https://www.fao.org/faostat/en/#home). 
 2. **Data Wrangling**;
 3. **Graph Creation**. 
 
+# How to use it
+Just clone the repository and change the configuration block to your liking. I don't recommend changing anything else if you don't know what you're doing.
+
 ## How it Works
 
 The Configuration section allows you to change the analysis by setting various parameters. The Data Wrangling section cleans and prepares the data for visualization. And, lastly, the Graph Creation section creates a bar graph, helping visualize the top countries based on the specified criteria. This script is designed to be flexible and adaptable to any FAOSTAT data (hopefully), making it a useful tool for exploring and visualizing FAOSTAT datasets.
