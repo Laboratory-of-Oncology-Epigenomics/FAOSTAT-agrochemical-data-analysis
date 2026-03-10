@@ -1,0 +1,509 @@
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 84px;
+}
+.caption {
+  font-size: 0.9em;
+  font-style: italic;
+  color: grey;
+  margin-right: 10%;
+  margin-left: 10%;
+  text-align: justify;
+}
+.main-content {
+        max-width: 95% !important;
+      }
+      .dataTables_wrapper {
+        overflow-x: auto !important;
+        display: block;
+      }
+table.dataTable td, table.dataTable th {
+  white-space: nowrap;
+}
+/* Força o cabeçalho a permitir rolagem horizontal */
+.dataTables_scrollHead {
+    overflow: hidden !important;
+    position: relative !important;
+    border: 0 !important;
+    width: 100% !important;
+}
+
+/* Garante que a tabela interna do header não fique presa a 100% da tela */
+.dataTables_scrollHeadInner {
+    width: auto !important;
+    padding-right: 0px !important;
+}
+
+.dataTables_scrollHeadInner table {
+    margin-left: 0 !important;
+    width: auto !important;
+}
+
+/* Evita que o tema downcute esconda o que transborda na tabela */
+.main-content, .section.level1, .section.level2 {
+    overflow: visible !important;
+}
+
+/* ==========================================================================
+   DARK THEME para RMarkdown — estilo prettydoc
+   Fonte: SauceCodePro Nerd Font
+   ========================================================================== */
+
+/* ---------- Import da fonte (fallback para monospace se não instalada) ----- */
+/* Se você tiver a fonte .woff2 local, descomente e ajuste o @font-face abaixo:
+@font-face {
+  font-family: 'SauceCodePro Nerd Font';
+  font-style: normal;
+  font-weight: 400;
+  src: url('SauceCodeProNerdFont-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SauceCodePro Nerd Font';
+  font-style: normal;
+  font-weight: 700;
+  src: url('SauceCodeProNerdFont-Bold.woff2') format('woff2');
+}
+*/
+
+:root {
+  /* Fundos */
+  --bg-primary:            #0d0d0d;
+  --bg-secondary:          #161616;
+  --bg-tertiary:           #1e1e1e;
+
+  /* Texto */
+  --text-primary:          #f0f0f0;
+  --text-secondary:        #d4d4d4;
+  --text-muted:            #6b6b6b;
+
+  /* Acentos laranja */
+  --accent:                #e8830c;
+  --accent-secondary:      #f5a623;
+  --accent-dim:            #c96a00;
+
+  /* Cores de syntax */
+  --green:                 #a8c97a;
+  --red:                   #e06c6c;
+  --orange:                #e8930c;
+  --yellow:                #d4a950;
+  --cyan:                  #7ec8c8;
+
+  /* Estrutura */
+  --border:                #2a2a2a;
+
+  /* Header */
+  --header-gradient-start: #1a1a1a;
+  --header-gradient-end:   #2d1a00;
+}
+/* ---------- Reset & Base -------------------------------------------------- */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: "SauceCodePro Nerd Font", "SauceCodePro Nerd Font Mono",
+               "Source Code Pro", "Fira Code", "Cascadia Code", monospace;
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Page Header (estilo prettydoc/cayman) ------------------------- */
+.page-header,
+#header {
+  background-image: linear-gradient(135deg, var(--header-gradient-start), var(--header-gradient-end));
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  border-radius: 0 0 12px 12px;
+}
+
+h1.title,
+h1.title.toc-ignore,
+.project-name {
+  color: #ffffff !important;
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.5px;
+  font-family: "SauceCodePro Nerd Font", "SauceCodePro Nerd Font Mono",
+               "Source Code Pro", monospace;
+}
+
+h3.subtitle,
+.project-tagline {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0 0 0.5rem 0;
+  font-style: italic;
+}
+
+h4.author,
+.project-author {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0.2rem 0;
+}
+
+h4.date,
+.project-date {
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin: 0.2rem 0;
+}
+
+/* ---------- Container / Main Content -------------------------------------- */
+.main-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.main-content,
+.container-fluid {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+section.main-content {
+  padding: 1rem 0 4rem 0;
+}
+
+/* ---------- Headings ------------------------------------------------------ */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-family: "SauceCodePro Nerd Font", "SauceCodePro Nerd Font Mono",
+               "Source Code Pro", monospace;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+h1 { font-size: 2rem; }
+h2 {
+  font-size: 1.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--border);
+}
+h3 { font-size: 1.3rem; color: var(--accent); }
+h4 { font-size: 1.1rem; color: var(--accent-secondary); }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.9rem; color: var(--text-muted); }
+
+/* ---------- Links --------------------------------------------------------- */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a:hover {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+}
+
+/* ---------- Paragraphs & Text --------------------------------------------- */
+p {
+  margin: 0 0 1rem 0;
+  color: var(--text-secondary);
+}
+
+strong, b {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+em, i {
+  color: var(--text-secondary);
+}
+
+blockquote {
+  border-left: 4px solid var(--accent);
+  margin: 1.5rem 0;
+  padding: 0.8rem 1.2rem;
+  background-color: var(--bg-secondary);
+  border-radius: 0 8px 8px 0;
+  color: var(--text-secondary);
+}
+blockquote p {
+  margin: 0;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--border);
+  margin: 2rem 0;
+}
+
+/* ---------- Lists --------------------------------------------------------- */
+ul, ol {
+  color: var(--text-secondary);
+  padding-left: 1.8rem;
+}
+li {
+  margin-bottom: 0.3rem;
+}
+
+/* ---------- Code (inline) ------------------------------------------------- */
+code {
+  font-family: "SauceCodePro Nerd Font", "SauceCodePro Nerd Font Mono",
+               "Source Code Pro", "Fira Code", monospace;
+  font-size: 0.9em;
+  background-color: var(--bg-tertiary);
+  color: var(--orange);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+/* ---------- Code blocks --------------------------------------------------- */
+pre {
+  font-family: "SauceCodePro Nerd Font", "SauceCodePro Nerd Font Mono",
+               "Source Code Pro", "Fira Code", monospace;
+  font-size: 0.88rem;
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  line-height: 1.5;
+  margin: 1rem 0;
+}
+
+pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+pre:not([class]) {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* ---------- Syntax highlighting (dark theme) ------------------------------ */
+code span.kw { color: var(--accent-secondary); font-weight: bold; }  /* Keyword */
+code span.dt { color: var(--cyan); }                                   /* DataType */
+code span.dv { color: var(--orange); }                                 /* DecVal */
+code span.bn { color: var(--orange); }                                 /* BaseN */
+code span.fl { color: var(--orange); }                                 /* Float */
+code span.ch { color: var(--green); }                                  /* Char */
+code span.st { color: var(--green); }                                  /* String */
+code span.co { color: var(--text-muted); font-style: italic; }        /* Comment */
+code span.ot { color: var(--cyan); }                                   /* Other */
+code span.al { color: var(--red); font-weight: bold; }                /* Alert */
+code span.fu { color: var(--accent); font-weight: bold; }             /* Function */
+code span.er { color: var(--red); background-color: rgba(247,118,142,0.1); } /* Error */
+code span.wa { color: var(--yellow); font-style: italic; }            /* Warning */
+code span.cn { color: var(--orange); }                                 /* Constant */
+code span.sc { color: var(--green); }                                  /* SpecialChar */
+code span.vs { color: var(--green); }                                  /* VerbatimString */
+code span.ss { color: var(--green); }                                  /* SpecialString */
+code span.im { color: var(--accent); }                                 /* Import */
+code span.va { color: var(--text-primary); }                           /* Variable */
+code span.cf { color: var(--accent-secondary); font-weight: bold; }   /* ControlFlow */
+code span.op { color: var(--cyan); }                                   /* Operator */
+code span.bu { color: var(--cyan); }                                   /* BuiltIn */
+code span.ex { color: var(--accent); }                                 /* Extension */
+code span.pp { color: var(--red); }                                    /* Preprocessor */
+code span.at { color: var(--cyan); }                                   /* Attribute */
+code span.do { color: var(--text-muted); font-style: italic; }        /* Documentation */
+code span.an { color: var(--text-muted); font-style: italic; }        /* Annotation */
+code span.cv { color: var(--text-muted); font-style: italic; }        /* CommentVar */
+code span.in { color: var(--yellow); font-style: italic; }            /* Information */
+
+/* ---------- Tables -------------------------------------------------------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: var(--bg-tertiary);
+}
+
+th {
+  color: var(--accent);
+  font-weight: 700;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  border-bottom: 2px solid var(--border);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+tbody tr:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* ---------- Images -------------------------------------------------------- */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+/* ---------- TOC (Table of Contents) --------------------------------------- */
+#TOC {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+#TOC ul {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+
+#TOC > ul {
+  padding-left: 0;
+}
+
+#TOC li {
+  margin-bottom: 0.4rem;
+}
+
+#TOC a {
+  color: var(--text-secondary);
+}
+
+#TOC a:hover {
+  color: var(--accent);
+}
+
+/* ---------- Abstract ------------------------------------------------------ */
+div.abstract {
+  background-color: var(--bg-secondary);
+  border-left: 4px solid var(--accent-secondary);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem auto;
+  max-width: 90%;
+}
+
+p.abstract {
+  color: var(--accent-secondary);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ---------- Footnotes ----------------------------------------------------- */
+.footnotes {
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Scrollbar (Webkit) -------------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ---------- Selection ----------------------------------------------------- */
+::selection {
+  background-color: rgba(122, 162, 247, 0.3);
+  color: #ffffff;
+}
+
+/* ---------- R output ------------------------------------------------------ */
+.r-output,
+pre.r {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* ---------- Responsividade ------------------------------------------------ */
+@media (max-width: 768px) {
+  .main-container, .main-content {
+    padding: 0 1rem;
+  }
+
+  .page-header, #header {
+    padding: 2rem 1rem;
+  }
+
+  h1.title, .project-name {
+    font-size: 1.8rem;
+  }
+
+  pre {
+    font-size: 0.8rem;
+    padding: 0.8rem;
+  }
+}
+/* ---------- TOC floating: remover blocos brancos -------------------------- */
+.tocify,
+.tocify-wrapper,
+#TOC,
+.well {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+/* Links do TOC */
+.tocify a,
+.tocify .tocify-item {
+  color: var(--text-secondary) !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* Item ativo / selecionado */
+.tocify .tocify-item.active,
+.tocify .active > a,
+.tocify a:hover {
+  color: var(--accent) !important;
+  background-color: var(--bg-tertiary) !important;
+  border-left: 3px solid var(--accent) !important;
+}
+
+/* Header do TOC */
+.tocify-header {
+  background-color: transparent !important;
+}
+
+/* Remove sombra interna do .well do Bootstrap */
+.well {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  padding: 12px !important;
+}

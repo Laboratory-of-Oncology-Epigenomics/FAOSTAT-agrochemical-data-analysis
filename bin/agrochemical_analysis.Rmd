@@ -1,38 +1,47 @@
 ---
-title: Brazil's agrotoxic use per year
+title: World's agrochemicals annual use
 author: Samuel Prates dos Santos
 date: "`r Sys.Date()`"
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = "UTF-8",
   output_dir = here::here ("results"),
   output_file = paste0(Sys.Date(), ".html")) })
+bibliography: "../docs/references.bib" # Path to the bibliography file 
+link-citations: true
 output:
   html_document:
+    theme: default
+    highlight: tango
+    css: "style.css"
     toc: true
-    toc_depth: 3
     toc_float: true
     number_sections: true
-    theme: darkly
-    highlight: zenburn
+    includes:
+      after_body: "footer.html"
     df_print: paged
     code_folding: show
+    code_download: true
 ---
-# Introduction
-This script analyzes data from [FAOSTAT](https://www.fao.org/faostat/en/#home). It is divided into three main sections: 
 
-1. Configuration;
-2. Data Wrangling;
-3. Graph Creation. 
+# Introduction
+
+This script analyzes data from [FAOSTAT](https://www.fao.org/faostat/en/#home). It is divided into three main sections:
+
+1.  Configuration;
+2.  Data Wrangling;
+3.  Graph Creation.
 
 The Configuration section allows you to change the analysis by setting various parameters. The Data Wrangling section cleans and prepares the data for visualization. And, lastly, the Graph Creation section creates a bar graph, helping visualize the top countries based on the specified criteria. This script is designed to be flexible and adaptable to any FAOSTAT data (hopefully), making it a useful tool for exploring and visualizing FAOSTAT datasets.
 
 If there's anything to improve (there probably is), please let me know by opening an issue or a PR on the repository :). Have a great day!
 
 # Libraries
+
 ```{r library, message=FALSE, warning=FALSE}
 library(here)
 library(tidyverse)
 library(rmarkdown)
+library(DT)
 ```
 
 # Configuration
@@ -40,6 +49,7 @@ library(rmarkdown)
 > ✏️ **Edit only this chunk** to adapt the script to your analysis.
 
 ```{r config, message=FALSE}
+reference_path <- here("docs", "references.bib") # Path to the bibliography file
 file_path <- here("data", "FAOSTAT_data_en_3-5-2026.csv") 
 Target_Columns <- c("Year","Area", "Value") # Change what columns you want to analyze
 Target_Year <- 2020 # Select what year do you want analyze
@@ -60,6 +70,7 @@ First_Place_Color <- "#FF0000" # Color for the first place
 Second_Place_Color <- "#00F0F0" # Color for the second place
 The_Leftover_color <- "#333333" # Color for the remaining ranks
 ```
+
 # Data Wrangling
 
 ```{r data_wrangling}
@@ -84,7 +95,9 @@ Ranked_Data <- Cleaned_Data |> # Ranks the data by value, keeping only the top e
     Area = reorder(Area, Value) # Reorders the Area column based on the Value column for better visualization in the graph.
   )
 ```
+
 # Graph Creation
+
 ```{r graph_creation}
 # Creates a bar graph using ggplot2, with different fill colors based on the rank category. 
 # If Allow_Gradient is FALSE, it makes the non gradient color. 
@@ -125,4 +138,12 @@ if (Allow_Gradient == FALSE) {
 
 ```{r save_message, echo=FALSE}
 message("The file was saved in 'Results'")
+```
+
+# Dataframe used
+
+```{r dataframe, echo=FALSE}
+datatable(Raw_Data, 
+          rowname = FALSE, 
+          options =list(pageLength = 5, scrollX=TRUE))
 ```
