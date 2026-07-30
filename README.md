@@ -14,7 +14,7 @@ The Configuration section allows you to change the analysis by setting various p
 
 ## Requirements
 
-It should all be automatically downloaded and installed, but if it isn't, the libraries used where:
+It should all be automatically downloaded and installed, but if it isn't, the libraries used were:
 
 1. **here** (for file path management and organization)
 2. **tidyverse** (for data manipulation and visualization)
